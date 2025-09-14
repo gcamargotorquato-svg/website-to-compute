@@ -1,21 +1,42 @@
-MIT License
-
-Copyright (c) 2025 Glitch
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+<!DOCTYPE html><html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Simulador: Derrote o Careca Super Forte</title>
+<style>
+body { font-family: Arial, sans-serif; background:#111; color:#eee; text-align:center; }
+button { padding:10px 20px; margin:5px; font-size:16px; cursor:pointer; }
+.bar { height:20px; background:#444; margin:5px auto; width:200px; position:relative; }
+.bar-inner { height:100%; background:#0f0; width:100%; }
+.log { max-height:200px; overflow-y:auto; text-align:left; margin:10px auto; width:500px; background:#222; padding:10px; }
+</style>
+</head>
+<body>
+<h1>Simulador: Derrote o Careca Super Forte</h1>
+<div id="playerName"></div>
+<div class="bar"><div id="playerHP" class="bar-inner"></div></div>
+<div id="bossName">Careca Super Forte</div>
+<div class="bar"><div id="bossHP" class="bar-inner"></div></div>
+<div>
+<button onclick="playerAction('attack')">Atacar</button>
+<button onclick="playerAction('ultimate')">Ultimate</button>
+<button onclick="playerAction('defend')">Defender</button>
+<button onclick="playerAction('form')">Ativar Forma</button>
+</div>
+<div class="log" id="log"></div>
+<script>
+// --- Personagens ---
+let player = {
+  name: 'Koku',
+  hp: 25000,
+  maxHp: 25000,
+  resist: 600,
+  power: 400,
+  forms: [
+    {name:'Super Sai… qualquer coisa', threshold:80, powerAdd:200},
+    {name:'Super Sai 2 – Raio do Memê', threshold:65, powerAdd:300, evade:0.1},
+    {name:'Super Sai 3 – Cabelo Caótico', threshold:50, powerAdd:450, evade:0.25},
+    {name:'Instinto Memético', threshold:35, powerAdd:600, evade:0.5, shield:0.8},
+    {name:'Instinto Ultra Meme', threshold:20, powerAdd:800, evade:0.6, regen:500},
+    {name:'Forma Divina do Zé Buscapé', threshold:5, powerAdd:1200, evade:0.7, critDouble:true}
+  ],
+  activeForm: null,
